@@ -4,7 +4,7 @@ import { NavLink, NavLinks } from "../../utils/static";
 export default (props: any) => {
   return (
     <main className={"flex h-screen w-full"}>
-      <div className="flex h-full w-80 flex-col justify-between bg-black p-8">
+      <div className="flex h-full w-80 flex-col justify-between bg-black p-8 ">
         <div className="flex w-full flex-col">
           <div className="flex w-full select-none flex-col items-center justify-center text-green">
             <Link href={"/"}>

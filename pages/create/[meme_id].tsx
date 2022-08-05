@@ -1,9 +1,20 @@
 import Head from "next/head";
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Create from "../../components/layouts/Create";
+
+type MemeText = {
+  text: string;
+  xpos: any;
+  ypos: any;
+  color: string;
+  bgColor: string;
+  fontSize: number;
+  fontWeight: number;
+};
 
 const CreateMeme = (props: any) => {
   const { meme } = props;
+  const [memeTexts, setMemeTexts] = useState<Array<MemeText>>([]);
   console.log(JSON.stringify(meme));
   return (
     <div className="flex w-full bg-inherit">
