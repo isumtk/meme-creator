@@ -1,4 +1,4 @@
-import { Listbox } from "@headlessui/react";
+import { Listbox, Transition } from "@headlessui/react";
 import { ChevronDownIcon, PlusIcon, MinusIcon } from "@heroicons/react/outline";
 import { useState } from "react";
 type MemeText = {
@@ -45,8 +45,15 @@ export default (props: any) => {
     }
   };
 
+  const handleFontColor = (e: any, idx: number) => {
+    let memeData: MemeText[] = [...textBoxes];
+    memeData[idx].color = e.target.value;
+    console.log(e.target.value);
+    setTextBoxes(memeData);
+  };
+
   return (
-    <div key={idx} className={"my-2 flex w-full flex-col"}>
+    <div key={idx} className={"my-2 mb-4 flex w-full flex-col"}>
       <div className="flex h-8 w-full items-center">
         <input
           value={object.text}
@@ -65,30 +72,31 @@ export default (props: any) => {
           <ChevronDownIcon width={24} height={24} />
         </button>
       </div>
-      <div className="mt-1 flex w-full">
-        <input
-          value={object.fontSize}
-          className={"mx-1 flex h-8 w-10 items-center rounded px-1"}
-          onChange={(e: any) => handleFontSize(e, idx)}
-        />
-        <Listbox value={object.font} onChange={() => console.log("Hello")}>
-          <Listbox.Button className={`bg-${object.color}`}>
-            {object.color}
-          </Listbox.Button>
-          <Listbox.Options></Listbox.Options>
-        </Listbox>
-
-        <button
-          onClick={() => handleFontWeight(idx)}
-          className={
-            object.fontWeight === 800
-              ? "flex h-8 w-8 items-center justify-center rounded bg-green-600 text-lg font-bold"
-              : "flex h-8 w-8 items-center justify-center rounded bg-white text-lg font-bold"
-          }
-        >
-          B
-        </button>
-      </div>
+      <Transition show={menuActive}>
+        <div className="mt-1 flex w-full">
+          <input
+            value={object.fontSize}
+            className={"flex h-8 w-10 items-center rounded px-1"}
+            onChange={(e: any) => handleFontSize(e, idx)}
+          />
+          <input
+            value={object.color}
+            type={"color"}
+            className={"mx-1 flex h-8 flex-1 items-center rounded p-1"}
+            onChange={(e: any) => handleFontColor(e, idx)}
+          />
+          <button
+            onClick={() => handleFontWeight(idx)}
+            className={
+              object.fontWeight === 800
+                ? "flex h-8 w-8 items-center justify-center rounded bg-green-600 text-lg font-bold"
+                : "flex h-8 w-8 items-center justify-center rounded bg-white text-lg font-bold"
+            }
+          >
+            B
+          </button>
+        </div>
+      </Transition>
     </div>
   );
 };

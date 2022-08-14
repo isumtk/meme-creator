@@ -19,6 +19,13 @@ const EditMeme: NextPageWithLayout = (props: any) => {
   const [memeTitle, setMemeTitle] = useState<string>(template.name);
   const [textBoxes, setTextBoxes] = useState<Array<MemeText>>([]);
 
+  const moveText = (e: any, idx: number) => {
+    let memeData: MemeText[] = [...textBoxes];
+    memeData[idx].xpos = e.screenX;
+    memeData[idx].ypos = e.screenY;
+    setTextBoxes(memeData);
+  };
+
   const addTextBox = () => {
     let newText: MemeText = {
       text: "Meme Text",
@@ -84,6 +91,18 @@ const EditMeme: NextPageWithLayout = (props: any) => {
               x={"0"}
               y={"0"}
             />
+            {textBoxes.map((text: any, idx: number) => (
+              <text
+                x={text.xpos}
+                y={text.xpos}
+                fontSize={text.fontSize}
+                fontWeight={text.fontWeight}
+                fill={text.color}
+                //onMouseMove={(e) => moveText(e, idx)}
+              >
+                {text.text}
+              </text>
+            ))}
           </svg>
         </div>
         <div
@@ -109,7 +128,7 @@ const EditMeme: NextPageWithLayout = (props: any) => {
                 }
               />
             </div>
-            <div className="mt-1 max-h-full min-h-0 w-full overflow-y-auto bg-amber-400">
+            <div className="mt-1 max-h-full min-h-0 w-full overflow-y-auto bg-inherit">
               {textBoxes.length > 0 ? (
                 textBoxes.map((object: MemeText, idx: number) => (
                   <TextBox
